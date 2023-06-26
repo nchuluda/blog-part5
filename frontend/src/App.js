@@ -83,6 +83,33 @@ const App = () => {
       })
   }
 
+  const removeBlog = async (blog) => {
+    if (window.confirm(`Remove blog: ${blog.title} by ${blog.author} ?`)) {
+      try {
+        await blogService.remove(blog)
+        setNotification(`${blog.title} by ${blog.author} removed`)
+        setTimeout(() => {
+          setNotification(null)
+        }, 3000)
+      }
+      catch (error) {
+        setErrorMessage('Unauthorized to remove blog')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 3000)
+      }
+    } 
+  }
+
+  const addLike = async (blog) => {
+    const likedBlog = {
+      ...blog,
+      likes: blog.likes + 1
+    }
+    try { await blogService.update(blog.id, likedBlog) } 
+    catch (error) { console.log(error) }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -104,15 +131,18 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      
       <Notification message={notification} />
       <Error message={errorMessage} />
+
       <p>{user.name} logged in  <button onClick={handleLogout}> logout</button></p> 
       
       <Togglable buttonLabel='new note'>
         <BlogForm createBlog={addBlog} />
       </Togglable>
+      
       {sortedBlogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} addLike={addLike} removeBlog={removeBlog} user={user}/>
       )}
     </div>
   )

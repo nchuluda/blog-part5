@@ -1,18 +1,19 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, addLike, removeBlog, user }) => {
 
   const [expanded, setExpanded] = useState(false)
 
-  const addLike = () => {
-    const likedBlog = {
-      ...blog,
-      likes: blog.likes + 1
+  const removeButton = () => {
+    if (user.username === blog.user.username) {
+      return (
+        <button onClick={() => removeBlog(blog)}>remove</button>
+      )
+    } else {
+      return
     }
-    blogService.update(blog.id, likedBlog)
   }
-  
+
   const collapsedView = () => (
     <div>
         {blog.title} <button onClick={() => setExpanded(!expanded)}>view</button>
@@ -23,8 +24,9 @@ const Blog = ({ blog }) => {
     <div>
       {blog.title} {blog.author} <button onClick={() => setExpanded(!expanded)}>hide</button><br/>
       {blog.url}<br/>
-      {blog.likes} <button onClick={addLike}>like</button><br/>
-      {blog.user.name}
+      {blog.likes} <button onClick={() => addLike(blog)}>like</button><br/>
+      {blog.user.name}<br/>
+      {removeButton()}
     </div>
   )
 
