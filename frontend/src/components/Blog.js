@@ -1,24 +1,29 @@
 import { useState } from 'react'
+import blogService from '../services/blogs'
 
-const Blog = ({blog}) => {
+const Blog = ({ blog }) => {
 
   const [expanded, setExpanded] = useState(false)
 
-  const toggleExpanded = () => {
-    setExpanded(!expanded)
+  const addLike = () => {
+    const likedBlog = {
+      ...blog,
+      likes: blog.likes + 1
+    }
+    blogService.update(blog.id, likedBlog)
   }
-
+  
   const collapsedView = () => (
     <div>
-        {blog.title} <button onClick={toggleExpanded}>view</button>
+        {blog.title} <button onClick={() => setExpanded(!expanded)}>view</button>
     </div>
   )
 
   const expandedView = () => (
     <div>
-      {blog.title} {blog.author} <button onClick={toggleExpanded}>hide</button><br/>
+      {blog.title} {blog.author} <button onClick={() => setExpanded(!expanded)}>hide</button><br/>
       {blog.url}<br/>
-      {blog.likes} <button>like</button><br/>
+      {blog.likes} <button onClick={addLike}>like</button><br/>
       {blog.user.name}
     </div>
   )
