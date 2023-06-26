@@ -16,10 +16,10 @@ const Blog = ({blog}) => {
 
   const expandedView = () => (
     <div>
-      {blog.title} <button onClick={toggleExpanded}>hide</button><br/>
+      {blog.title} {blog.author} <button onClick={toggleExpanded}>hide</button><br/>
       {blog.url}<br/>
       {blog.likes} <button>like</button><br/>
-      {blog.author}
+      {blog.user.name}
     </div>
   )
 
