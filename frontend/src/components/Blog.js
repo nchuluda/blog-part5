@@ -9,14 +9,12 @@ const Blog = ({ blog, addLike, removeBlog, user }) => {
       return (
         <button onClick={() => removeBlog(blog)}>remove</button>
       )
-    } else {
-      return
-    }
+    } else return
   }
 
   const collapsedView = () => (
     <div>
-        {blog.title} <button onClick={() => setExpanded(!expanded)}>view</button>
+      {blog.title} <button onClick={() => setExpanded(!expanded)}>view</button>
     </div>
   )
 
