@@ -8,7 +8,6 @@ import Togglable from './components/Toggleable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-
 const App = () => {
   const [blogs, setBlogs] = useState([])
 
