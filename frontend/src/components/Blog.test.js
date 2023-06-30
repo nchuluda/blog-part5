@@ -50,3 +50,33 @@ test('url and likes shown after view button has been clicked', async () => {
   expect(div).toHaveTextContent('6')
 
 })
+
+test('clicking like button twice calls addLike twice', async () => {
+  const blog = {
+    title: 'b3ta the best of the internet',
+    author: 'Rob',
+    url: 'www.b3ta.co.uk',
+    likes: 6,
+    user: { name: 'Tester' }
+  }
+
+  const testUser = {
+    name: 'Tester',
+    username: 'tester'
+  }
+
+  const mockHandler = jest.fn()
+
+  render(<Blog blog={blog} user={testUser} addLike={mockHandler} />)
+
+  const user = userEvent.setup()
+  const viewButton = screen.getByText('view')
+  await user.click(viewButton)
+
+  const likeButton = screen.getByText('like')
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(mockHandler.mock.calls).toHaveLength(2)
+
+})
