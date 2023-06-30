@@ -14,7 +14,7 @@ const Blog = ({ blog, addLike, removeBlog, user }) => {
 
   const collapsedView = () => (
     <div>
-      {blog.title} <button onClick={() => setExpanded(!expanded)}>view</button>
+      {blog.title} {blog.author} <button onClick={() => setExpanded(!expanded)}>view</button>
     </div>
   )
 
@@ -38,7 +38,7 @@ const Blog = ({ blog, addLike, removeBlog, user }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {expanded ? expandedView() : collapsedView()}
     </div>
   )
